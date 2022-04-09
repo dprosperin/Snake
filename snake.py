@@ -4,9 +4,6 @@ import pygame
 import time
 import random
 import datetime
-import json
-import os
-import sys
 
 snake_speed = 15
 
