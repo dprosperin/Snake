@@ -152,11 +152,15 @@ def game_over(score, score2):
     quit()
 
 
+done = False
+
 # Main Function
-while True:
+while not done:
 
     # handling key events
     for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 change_to = 'UP'
