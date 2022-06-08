@@ -1,21 +1,27 @@
 import csv
 from pygame import Surface
-from source.Snake import Snake
 from source.Fruit import Fruit
 import settings
+from source.Snake import Snake
+from Cherry import Cherry
+from Lemon import Lemon
+from Lime import Lime
+from Blueberries import Blueberries
+from random import randint
 
 
 class Game:
     """Représente une partie de jeu"""
 
-    def __init__(self, surface: Surface, is_score_shown: bool = True) -> None:
+    def __init__(self, surface: Surface, to_draw, is_score_shown: bool = True) -> None:
         self.surface = surface
         self.players = []
         self.fruits = []
         self.is_over = False
         self.is_score_shown = is_score_shown
         self.tick = 0
-        self.is_paused = False
+        self.is_paused = True
+        self.to_draw = to_draw
 
     def start(self) -> None:
         """Démarre la partie"""
@@ -27,12 +33,14 @@ class Game:
         for player in self.players:
             player.is_moving = False
         self.is_paused = True
+        print("La partie est sur pause.")
 
     def play(self) -> None:
         """Reprend la partie"""
         for player in self.players:
             player.is_moving = True
         self.is_paused = False
+        print("La partie reprend")
 
     def toggle(self) -> None:
         if self.is_paused:
@@ -58,6 +66,16 @@ class Game:
         for player in self.players:
             player.kill()
 
+    def spawn_fruits(self, number_of_fruits):
+        fruits_existing = [Cherry, Lemon, Lime, Blueberries]
+        x, y = self.surface.get_size()
+        for i in range(number_of_fruits):
+            fruit_to_add = fruits_existing[randint(0, 3)]
+            fruit_position = [randint(0, x), randint(0, y)]
+            while fruit_position in [element.position for element in self.game_set]:
+                fruit_position = [randint(0, x), randint(0, y)]
+            self.fruits.append(fruit_to_add(in_game=self, position=fruit_position))
+
     def clear_fruits(self) -> None:
         for fruit in self.fruits:
             fruit.kill()
@@ -69,6 +87,7 @@ class Game:
         self.kill_players()
         self.clear_fruits()
         self.is_over = True
+        self.to_draw = []
         print("La partie est terminée !")
 
     def save(self):
@@ -118,7 +137,7 @@ class Game:
             other_players = set(self.players) - {current_player}
             for block in current_player.positions:
                 for other_player in other_players:
-                    if block in other_player.position:
+                    if block in other_player.positions:
                         self.over()
 
     def check_fruit_collisions(self):
@@ -126,6 +145,7 @@ class Game:
             for fruit in self.fruits:
                 if player.position == fruit.position:
                     player.eat(fruit)
+                    self.spawn_fruits(1)
 
     def check_collisions(self):
         self.check_border_collisions()
@@ -165,3 +185,9 @@ class Game:
 
             # displaying text
             self.surface.blit(score_surface, score_rect)
+
+    @property
+    def game_set(self):
+        game_set = self.players.copy()
+        game_set.extend(self.fruits.copy())
+        return game_set

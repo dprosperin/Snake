@@ -7,9 +7,8 @@ from SnakeBlock import SnakeBlock
 
 class Snake(Movable):
     def __init__(self, nickname: str, color: Color = WHITE,
-                 length=4, score=0, **kwargs) -> None:
+                 length=5, score=0, **kwargs) -> None:
         super().__init__(**kwargs)
-
         if kwargs.get('in_game') is not None:
             self.in_game.add_player(self)
 
@@ -65,9 +64,6 @@ class Snake(Movable):
                     next_block = SnakeBlock(color=self.color, direction=self.direction,
                                             position=[prev_block.position[0] - 10, prev_block.position[1]])
                 self.body.append(next_block)
-        """
-            self.body = [[x, self.position[1]] for x in range(
-                self.position[0], self.position[0] - self.length * 10, -10)]"""
 
     def cut_body(self, new_length):
         if new_length >= len(self):
@@ -78,9 +74,6 @@ class Snake(Movable):
         self.fruit_collected.append(fruit)
         fruit.is_collected = True
         self.give_effects(fruit.give_effects)
-
-    def __del__(self):
-        print(self)
 
     @property
     def length(self):
