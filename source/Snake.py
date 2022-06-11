@@ -97,6 +97,26 @@ class Snake(Movable):
     def positions(self) -> list[tuple[int, int]]:
         return [snake_body_part.position for snake_body_part in self.body]
 
+    @property
+    def direction(self):
+        return self._direction
+
+    @direction.setter
+    def direction(self, new_direction):
+        try:
+            if new_direction == 'UP' and self._direction != 'DOWN':
+                self._direction = 'UP'
+            elif new_direction == 'DOWN' and self._direction != 'UP':
+                self._direction = 'DOWN'
+            elif new_direction == 'LEFT' and self._direction != 'RIGHT':
+                self._direction = 'LEFT'
+            elif new_direction == 'RIGHT' and self._direction != 'LEFT':
+                self._direction = 'RIGHT'
+            else:
+                self._direction = self._direction
+        except AttributeError:
+            self._direction = new_direction
+
     def __repr__(self):
         return f"<{self.__class__.__name__} {self.position}, {self.direction}, {self.nickname}>"
 
