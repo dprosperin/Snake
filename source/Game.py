@@ -68,13 +68,18 @@ class Game:
 
     def spawn_fruits(self, number_of_fruits):
         fruits_existing = [Cherry, Lemon, Lime, Blueberries]
-        x, y = self.surface.get_size()
         for i in range(number_of_fruits):
-            fruit_to_add = fruits_existing[randint(0, 3)]
-            fruit_position = [randint(0, x), randint(0, y)]
-            while fruit_position in [element.position for element in self.game_set]:
-                fruit_position = [randint(0, x), randint(0, y)]
-            self.fruits.append(fruit_to_add(in_game=self, position=fruit_position))
+            fruit_to_add = fruits_existing[randint(0, len(fruits_existing) - 1)]
+            self.fruits.append(fruit_to_add.from_random_position(self))
+
+    def get_random_position(self) -> [int, int]:
+        x, y = self.surface.get_size()
+
+        random_position = [randint(0, (x // 10)) * 10, randint(0, (y // 10)) * 10]
+        while random_position in [element.position for element in self.game_set]:
+            random_position = [randint(0, (x // 10)) * 10, randint(0, (y // 10)) * 10]
+
+        return random_position
 
     def clear_fruits(self) -> None:
         for fruit in self.fruits:
