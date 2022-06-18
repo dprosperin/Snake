@@ -69,7 +69,7 @@ class MainActivity:
         pygame.time.delay(5000)
 
     def init(self):
-        pygame.display.set_caption('Snake War v2')
+        pygame.display.set_caption('Snake War v2.1')
         self.game_window = pygame.display.set_mode((self.window_x, self.window_y), flags=FULLSCREEN)
         self.fps = pygame.time.Clock()
         self.finished = False
@@ -143,8 +143,8 @@ class MainActivity:
 
         # 2. Démarrer la première partie
         self.round1 = Game(self.game_window, self.to_draw)
-        self.player_red = Snake("RED", position=(500, 100), color=RED, in_game=self.round1)
-        self.player_blue = Snake("BLUE", position=(500, 60), color=BLUE, in_game=self.round1)
+        self.player_red = Snake("RED", position=(500, 300), color=RED, in_game=self.round1)
+        self.player_blue = Snake("BLUE", position=(500, 500), color=BLUE, in_game=self.round1)
 
         self.round1.spawn_fruits(10)
         self.to_draw.append(self.round1.draw)
