@@ -4,6 +4,8 @@ from source.Game import Game
 from source.Snake import Snake
 from source.settings import *
 from time import time, sleep
+import source.Resource as Resource
+from sys import exit
 
 
 class MainActivity:
@@ -69,7 +71,7 @@ class MainActivity:
         pygame.time.delay(5000)
 
     def init(self):
-        pygame.display.set_caption('Snake War v2.1')
+        pygame.display.set_caption('Snake War v2.2')
         self.game_window = pygame.display.set_mode((self.window_x, self.window_y), flags=FULLSCREEN)
         self.fps = pygame.time.Clock()
         self.finished = False
@@ -136,10 +138,10 @@ class MainActivity:
 
     def game_setup(self):
         # 1. Affichage des règles
-        self.image_rules = pygame.image.load("assets/rules.png").convert()
-        self.image_points = pygame.image.load("assets/points.png").convert()
-        self.image_fruits = pygame.image.load("assets/fruits.png").convert()
-        self.image_key_assignment = pygame.image.load("assets/key_assignment.png").convert()
+        self.image_rules = pygame.image.load(Resource.path("assets/rules.png")).convert()
+        self.image_points = pygame.image.load(Resource.path("assets/points.png")).convert()
+        self.image_fruits = pygame.image.load(Resource.path("assets/fruits.png")).convert()
+        self.image_key_assignment = pygame.image.load(Resource.path("assets/key_assignment.png")).convert()
 
         # 2. Démarrer la première partie
         self.round1 = Game(self.game_window, self.to_draw)

@@ -1,4 +1,4 @@
-from Entity import Entity
+from source.Entity import Entity
 
 
 class Collectible(Entity):

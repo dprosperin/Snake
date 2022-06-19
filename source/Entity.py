@@ -1,4 +1,4 @@
-from Alterable import Alterable
+from source.Alterable import Alterable
 
 
 class Entity(Alterable):

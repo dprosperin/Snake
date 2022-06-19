@@ -1,8 +1,8 @@
-from pygame import Color, draw, Rect
+from pygame import draw, Rect
 from source.settings import *
 from source.Fruit import Fruit
-from Movable import Movable
-from SnakeBlock import SnakeBlock
+from source.Movable import Movable
+from source.SnakeBlock import SnakeBlock
 
 
 class Snake(Movable):

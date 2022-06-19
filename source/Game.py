@@ -1,13 +1,14 @@
 import csv
 from pygame import Surface
 from source.Fruit import Fruit
-import settings
+from source.settings import *
 from source.Snake import Snake
-from Cherry import Cherry
-from Lemon import Lemon
-from Lime import Lime
-from Blueberries import Blueberries
+from source.Cherry import Cherry
+from source.Lemon import Lemon
+from source.Lime import Lime
+from source.Blueberries import Blueberries
 from random import randint
+from os.path import exists as file_exists
 
 
 class Game:
@@ -157,11 +158,15 @@ class Game:
         self.check_players_collisions()
         self.check_fruit_collisions()
 
-    @staticmethod
-    def save_score(player: Snake, score_path='./score.csv') -> None:
+    @classmethod
+    def save_score(cls, player: Snake, score_path='./score.csv') -> None:
         """Sauvegarde le score d'un joueur"""
+        fieldnames = ['player', 'score']
+
+        if not file_exists(score_path):
+            cls.create_score_file(fieldnames, score_path)
+
         with open(score_path, mode='a', encoding='utf-8', newline='') as score_file:
-            fieldnames = ['player', 'score']
             writer = csv.DictWriter(score_file, fieldnames=fieldnames)
 
             writer.writerow(
@@ -174,6 +179,13 @@ class Game:
             handling(csv.DictReader(score_file))
 
     @staticmethod
+    def create_score_file(fieldnames, score_path='./score.csv') -> None:
+        """Créer le fichier qui sauvegarde les scores"""
+        with open(score_path, mode='w', encoding='utf-8', newline='') as score_file:
+            writer = csv.DictWriter(score_file, fieldnames=fieldnames)
+            writer.writeheader()
+
+    @staticmethod
     def show_scoreboard(self) -> None:
         """Affiche le tableau des scores."""
         pass
@@ -181,7 +193,7 @@ class Game:
     def show_score(self) -> None:
         """displaying score countinuously"""
         for player in self.players:
-            score_surface = settings.HEADING.render(str(player.score), True, player.color)
+            score_surface = HEADING.render(str(player.score), True, player.color)
 
             score_rect = score_surface.get_rect()
             score_rect.x = player.position[0] - 10

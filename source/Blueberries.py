@@ -1,6 +1,6 @@
 from source.Fruit import Fruit
 from pygame import draw, Rect
-from settings import *
+from source.settings import *
 
 
 class Blueberries(Fruit):

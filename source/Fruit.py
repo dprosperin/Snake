@@ -1,4 +1,4 @@
-from Collectible import Collectible
+from source.Collectible import Collectible
 from pygame import draw, Rect
 from source.settings import *
 
