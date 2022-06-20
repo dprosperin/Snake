@@ -71,7 +71,7 @@ class MainActivity:
         pygame.time.delay(5000)
 
     def init(self):
-        pygame.display.set_caption('Snake War v2.2')
+        pygame.display.set_caption('Snake War v2.2.1')
         self.game_window = pygame.display.set_mode((self.window_x, self.window_y), flags=FULLSCREEN)
         self.fps = pygame.time.Clock()
         self.finished = False

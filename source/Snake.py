@@ -74,6 +74,7 @@ class Snake(Movable):
         self.fruit_collected.append(fruit)
         fruit.is_collected = True
         self.give_effects(fruit.give_effects)
+        self.in_game.fruits.remove(fruit)
 
     @property
     def length(self):
